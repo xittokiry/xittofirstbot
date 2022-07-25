@@ -1,8 +1,4 @@
-from asyncio.log import logger
-from crypt import methods
 import os
-from turtle import update
-from click import command
 import telebot
 import logging
 from config import *
@@ -13,14 +9,14 @@ server = Flask(__name__)
 logger = telebot.logger
 logger.setLevel(logging.DEBUG)
 
-@bot.message_handler(command=['start'])
+@bot.message_handler(command=["start"])
 def start(message):
     username = message.from_user.username
     bot.reply_to(message, f"Hello, {username}!")
     
-@server.route(f"/{BOT_TOKEN}", methods={'POST'})
+@server.route(f"/{BOT_TOKEN}", methods=["POST"])
 def redirect_message():
-    json_string = request.get_data().decode('utf-8')
+    json_string = request.get_data().decode("utf-8")
     update = telebot.types.Update.de_json(json_string)
     bot.process_new_updates([update])
     return "!", 200
